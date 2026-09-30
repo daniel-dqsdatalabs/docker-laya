@@ -11,13 +11,37 @@ dependencies = [
     "pydantic>=2.7",
     "torch>=2.5",
     "transformers>=4.48",
+    "python-dotenv>=1.2.3",
+    "httpx>=0.28.1",
 ]
 
 [tool.uv]
 package = false
 
 [dependency-groups]
-dev = ["ruff>=0.9"]
+dev = [
+    "ruff>=0.9",
+    "pytest>=8",
+    "httpx>=0.27",
+    "mypy>=1.19",
+    "pyright>=1.1.400",
+    "pyyaml>=6.0.3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.14"
+strict = true
+files = ["app", "tests"]
+
+[tool.pyright]
+pythonVersion = "3.14"
+typeCheckingMode = "standard"
+include = ["app", "tests"]
+venvPath = "."
+venv = ".venv"
 
 [[tool.uv.index]]
 name = "pytorch-cpu"
@@ -28,15 +52,20 @@ explicit = true
 torch = { index = "pytorch-cpu" }
 
 [tool.ruff]
-line-length = 100
-target-version = "py312"
+line-length = 120
+target-version = "py314"
 
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM", "D"]
 ignore = [
     "B008", # FastAPI Depends()/Header() in defaults is intentional
+    "D105", # magic methods document themselves
+    "D107", # __init__ is described by the class docstring
 ]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

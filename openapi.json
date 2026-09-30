@@ -12,6 +12,7 @@
           "meta"
         ],
         "summary": "Health check",
+        "description": "Report model readiness and configuration without requiring authentication.",
         "operationId": "healthz_healthz_get",
         "responses": {
           "200": {
@@ -51,16 +52,6 @@
           },
           "503": {
             "description": "Model not loaded yet"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -105,16 +96,6 @@
           },
           "503": {
             "description": "Model not loaded yet"
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -445,7 +426,8 @@
         "required": [
           "act_probability"
         ],
-        "title": "ActionResult"
+        "title": "ActionResult",
+        "description": "Probability that the model took an action for a question."
       },
       "BulkItem": {
         "properties": {
@@ -555,7 +537,8 @@
         "required": [
           "ok"
         ],
-        "title": "BulkItemResult"
+        "title": "BulkItemResult",
+        "description": "Either a validated prediction or an isolated error for one batch item."
       },
       "BulkPredictRequest": {
         "properties": {
@@ -675,6 +658,7 @@
         },
         "type": "object",
         "title": "BulkPredictRequest",
+        "description": "A batch with shared questions or optional per-item question and model overrides.",
         "examples": [
           {
             "questions": {
@@ -739,7 +723,8 @@
           "count",
           "results"
         ],
-        "title": "BulkPredictResponse"
+        "title": "BulkPredictResponse",
+        "description": "Ordered results and item count for a completed batch."
       },
       "ChoiceAnswer": {
         "properties": {
@@ -775,7 +760,8 @@
           "confidence",
           "action"
         ],
-        "title": "ChoiceAnswer"
+        "title": "ChoiceAnswer",
+        "description": "Selected option and calibrated probabilities for a choice question."
       },
       "ChoiceQuestion": {
         "properties": {
@@ -859,7 +845,8 @@
         "required": [
           "state"
         ],
-        "title": "DetectRequest"
+        "title": "DetectRequest",
+        "description": "Text or structured state submitted for language detection."
       },
       "EmailStateRequest": {
         "properties": {
@@ -894,7 +881,8 @@
         "required": [
           "body"
         ],
-        "title": "EmailStateRequest"
+        "title": "EmailStateRequest",
+        "description": "Email content and options used to construct a prediction state."
       },
       "HTTPValidationError": {
         "properties": {
@@ -960,7 +948,8 @@
           "models",
           "available_models"
         ],
-        "title": "HealthResponse"
+        "title": "HealthResponse",
+        "description": "Model readiness, device and enabled authentication methods."
       },
       "ModelsResponse": {
         "properties": {
@@ -984,7 +973,8 @@
           "available",
           "loaded"
         ],
-        "title": "ModelsResponse"
+        "title": "ModelsResponse",
+        "description": "Available checkpoints and the subset currently resident in memory."
       },
       "NoulAnswer": {
         "properties": {
@@ -1012,7 +1002,8 @@
           "confidence",
           "action"
         ],
-        "title": "NoulAnswer"
+        "title": "NoulAnswer",
+        "description": "Binary decision value, confidence and action probability."
       },
       "NoulQuestion": {
         "properties": {
@@ -1159,6 +1150,7 @@
           "state"
         ],
         "title": "PredictRequest",
+        "description": "One state with either explicit typed questions or a built-in preset.",
         "examples": [
           {
             "questions": {
@@ -1246,7 +1238,8 @@
           "answers",
           "usage"
         ],
-        "title": "PredictResponse"
+        "title": "PredictResponse",
+        "description": "Validated native prediction, preserving additional fields returned by Laya."
       },
       "Routing": {
         "properties": {
@@ -1271,7 +1264,8 @@
         "required": [
           "model"
         ],
-        "title": "Routing"
+        "title": "Routing",
+        "description": "Chosen checkpoint and optional routing details supplied by Laya."
       },
       "ScoreAnswer": {
         "properties": {
@@ -1316,7 +1310,8 @@
           "confidence",
           "action"
         ],
-        "title": "ScoreAnswer"
+        "title": "ScoreAnswer",
+        "description": "Expected score, scale legend and probabilities for an ordered question."
       },
       "ScoreQuestion": {
         "properties": {
@@ -1396,7 +1391,8 @@
           "probabilities",
           "confidence"
         ],
-        "title": "SystemOneChoiceAnswer"
+        "title": "SystemOneChoiceAnswer",
+        "description": "Choice result without native Laya action metadata."
       },
       "SystemOneNoulAnswer": {
         "properties": {
@@ -1415,7 +1411,8 @@
           "type",
           "noul"
         ],
-        "title": "SystemOneNoulAnswer"
+        "title": "SystemOneNoulAnswer",
+        "description": "Binary decision in the reduced SystemOne response format."
       },
       "SystemOneRequest": {
         "properties": {
@@ -1498,7 +1495,8 @@
           "model",
           "questions"
         ],
-        "title": "SystemOneRequest"
+        "title": "SystemOneRequest",
+        "description": "SystemOne-compatible input accepting model aliases and optional client metadata."
       },
       "SystemOneResponse": {
         "properties": {
@@ -1551,7 +1549,8 @@
           "answers",
           "usage"
         ],
-        "title": "SystemOneResponse"
+        "title": "SystemOneResponse",
+        "description": "SystemOne-compatible prediction with a generated request identifier."
       },
       "SystemOneScoreAnswer": {
         "properties": {
@@ -1591,7 +1590,8 @@
           "probabilities",
           "confidence"
         ],
-        "title": "SystemOneScoreAnswer"
+        "title": "SystemOneScoreAnswer",
+        "description": "Ordered score without native Laya action metadata."
       },
       "Usage": {
         "properties": {
@@ -1609,7 +1609,8 @@
           "input_tokens",
           "output_tokens"
         ],
-        "title": "Usage"
+        "title": "Usage",
+        "description": "Input and output token counts reported by the model."
       },
       "ValidationError": {
         "properties": {
@@ -1655,19 +1656,19 @@
     "securitySchemes": {
       "ApiKeyAuth": {
         "type": "apiKey",
+        "description": "A key from the server's API_KEYS.",
         "in": "header",
-        "name": "X-API-Key",
-        "description": "A key from the server's API_KEYS."
+        "name": "X-API-Key"
       },
       "BearerAuth": {
         "type": "http",
-        "scheme": "bearer",
-        "description": "An API key sent as a bearer token."
+        "description": "An API key sent as a bearer token.",
+        "scheme": "bearer"
       },
       "BasicAuth": {
         "type": "http",
-        "scheme": "basic",
-        "description": "A user:password from the server's BASIC_AUTH."
+        "description": "A user:password from the server's BASIC_AUTH.",
+        "scheme": "basic"
       }
     }
   },

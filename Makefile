@@ -1,11 +1,12 @@
 PORT ?= 8000
 
-.PHONY: help run format check fix openapi up down build build-model logs
+.PHONY: help run format check test fix openapi up down build build-model logs
 
 help:
 	@echo "make run     - run the API locally (uvicorn --reload on $(PORT))"
 	@echo "make format  - format Python with ruff"
-	@echo "make check   - lint Python with ruff"
+	@echo "make check   - check lint, docstrings, formatting and static types"
+	@echo "make test    - run service and HTTP regression tests"
 	@echo "make fix     - lint and auto-fix with ruff"
 	@echo "make openapi - regenerate openapi.json"
 	@echo "make up      - docker compose up --build (detached)"
@@ -22,6 +23,12 @@ format:
 
 check:
 	uv run ruff check .
+	uv run ruff format --check .
+	uv run mypy
+	uv run pyright
+
+test:
+	uv run pytest
 
 fix:
 	uv run ruff check --fix .
